@@ -8,9 +8,19 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+	  <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.0" />
 	  <PackageReference Include="EntityFramework" Version="6.4.4" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\courses_06_2025\my_laptop_courses\courses\docker_container_network_tests_org\EAApp\ProductAPI\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\courses_06_2025\my_laptop_courses\courses\docker_container_network_tests_org\EAApp\ProductAPI\.editorconfig" />
   </ItemGroup>
 </Project>
