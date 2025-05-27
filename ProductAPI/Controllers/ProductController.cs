@@ -1,11 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using ProductAPI.Data;
-using ProductAPI.Repository;
+// <copyright file="ProductController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace ProductAPI.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using ProductAPI.Data;
+    using ProductAPI.Repository;
 
     [ApiController]
     [Route("[controller]")]
@@ -22,7 +25,7 @@ namespace ProductAPI.Controllers
         [Route("/[controller]/[action]/{id}")]
         public Product GetProductById(int id)
         {
-            return productRepository.GetProductById(id);
+            return this.productRepository.GetProductById(id);
         }
 
         // GET: ProductController/GetProducts
@@ -30,7 +33,7 @@ namespace ProductAPI.Controllers
         [Route("/[controller]/[action]")]
         public ActionResult<List<Product>> GetProducts()
         {
-            return productRepository.GetAllProducts();
+            return this.productRepository.GetAllProducts();
         }
 
         // POST: ProductController/Create
@@ -38,16 +41,15 @@ namespace ProductAPI.Controllers
         [Route("/[controller]/[action]")]
         public Product Create(Product product)
         {
-            return productRepository.AddProduct(product);
+            return this.productRepository.AddProduct(product);
         }
-
 
         // PUT: ProductController/Create
         [HttpPut]
         [Route("/[controller]/[action]")]
         public Product Update(Product product)
         {
-            return productRepository.UpdateProduct(product);
+            return this.productRepository.UpdateProduct(product);
         }
 
         // PUT: ProductController/Delete
@@ -55,7 +57,7 @@ namespace ProductAPI.Controllers
         [Route("/[controller]/[action]")]
         public void Delete(int id)
         {
-            productRepository.DeleteProduct(id);
+            this.productRepository.DeleteProduct(id);
         }
 
     }
