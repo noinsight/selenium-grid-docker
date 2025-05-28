@@ -9,14 +9,21 @@ namespace EAAppTest
 {
     public class DriverFixture : IDisposable
     {
-        RemoteWebDriver driver;
+        RemoteWebDriver? driver;
 
         public void Setup(BrowserType browserType)
         {
             driver = new RemoteWebDriver(new Uri("http://selenium-hub:4444/"), GetBrowserOptions(browserType));
+
+            if (driver == null)
+            {
+                // Do something here
+            }
+
         }
 
-        public RemoteWebDriver Driver => driver;
+        // This solution provided by co-pilot.
+        public RemoteWebDriver Driver => driver ?? throw new InvalidOperationException("Driver is not initialized. Call Setup() before accessing the Driver.");
 
         private dynamic GetBrowserOptions(BrowserType browserType)
         {

@@ -1,9 +1,13 @@
-﻿using EAWebApp.Producer;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿// <copyright file="ProductController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace EAWebApp.Controllers
 {
+    using System.Threading.Tasks;
+    using EAWebApp.Producer;
+    using Microsoft.AspNetCore.Mvc;
+
     public class ProductController : Controller
     {
         private readonly IProductUtil productUtil;
@@ -15,46 +19,44 @@ namespace EAWebApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return this.View(); // Fixed SA1101
         }
 
         public async Task<IActionResult> List()
         {
-            var products = await productUtil.GetProduct();
-            return View(products);
+            var products = await this.productUtil.GetProduct(); // Fixed SA1101
+            return this.View(products); // Fixed SA1101
         }
 
         public ActionResult Create()
         {
-            return View();
+            return this.View(); // Fixed SA1101
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
-            await productUtil.CreateProduct(product);
+            await this.productUtil.CreateProduct(product); // Fixed SA1101
 
-            return RedirectToAction("List");
+            return this.RedirectToAction("List"); // Fixed SA1101
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            return View(await productUtil.GetProductById(id));
+            return this.View(await this.productUtil.GetProductById(id)); // Fixed SA1101
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Product product)
         {
-            await productUtil.EditProduct(product);
+            await this.productUtil.EditProduct(product); // Fixed SA1101
 
-            return RedirectToAction("List");
-
+            return this.RedirectToAction("List"); // Fixed SA1101
         }
-
 
         public async Task<IActionResult> Delete(int id)
         {
-            return View(await productUtil.GetProductById(id));
+            return this.View(await this.productUtil.GetProductById(id)); // Fixed SA1101
         }
 
         [HttpPost]
@@ -62,21 +64,19 @@ namespace EAWebApp.Controllers
         {
             try
             {
-                await productUtil.DeleteProduct(id);
+                await this.productUtil.DeleteProduct(id); // Fixed SA1101
 
-                return RedirectToAction("List");
+                return this.RedirectToAction("List"); // Fixed SA1101
             }
             catch
             {
-                return View();
+                return this.View(); // Fixed SA1101
             }
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            return View(await productUtil.GetProductById(id));
+            return this.View(await this.productUtil.GetProductById(id)); // Fixed SA1101
         }
-
-
     }
 }
