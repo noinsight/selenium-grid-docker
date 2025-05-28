@@ -12,7 +12,7 @@ namespace ProductAPI.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
     [Migration("20211210175227_initial")]
-    partial class initial
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

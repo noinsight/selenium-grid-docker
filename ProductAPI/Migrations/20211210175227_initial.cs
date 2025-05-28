@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// <copyright file="20211210175227_initial.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace ProductAPI.Migrations
 {
-    public partial class initial : Migration
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +21,7 @@ namespace ProductAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    ProductType = table.Column<int>(type: "int", nullable: false)
+                    ProductType = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {

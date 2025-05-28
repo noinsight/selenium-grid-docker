@@ -59,6 +59,5 @@ namespace ProductAPI.Controllers
         {
             this.productRepository.DeleteProduct(id);
         }
-
     }
 }

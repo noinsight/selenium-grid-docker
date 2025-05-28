@@ -1,4 +1,8 @@
-﻿namespace ProductAPI
+﻿// <copyright file="EnumSchemaFilter.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace ProductAPI
 {
     using System;
     using System.Linq;

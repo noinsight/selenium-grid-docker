@@ -7,7 +7,6 @@ namespace ProductAPI.Data
     using System.Collections.Generic;
     using System.Linq;
 
-
     /// <summary>
     /// Provides methods to seed initial data into the database context.
     /// </summary>
