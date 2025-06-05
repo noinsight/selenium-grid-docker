@@ -23,18 +23,6 @@ jobs:
       - name: Start app + test stack
         run: docker compose up -d
 
-      - name: Wait for selenium-hub to become ready
-        run: |
-          echo "Waiting for selenium-hub to be ready..."
-          for i in {1..50}; do
-            if curl -s http://localhost:4444/wd/hub/status | grep -q '"ready":true'; then
-              echo "✅ Selenium hub is ready."
-              break
-            fi
-            echo "⏳ Not ready yet..."
-            sleep 2
-          done
-
       - name: Run tests in eatest
         run: docker exec eatest dotnet test /src/EAAppTest/EAAppTest.csproj --logger:trx --no-build --configuration Release
 
