@@ -62,7 +62,7 @@ services:
       - "4443:4443"
       - "4444:4444"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O - http://172.18.0.3:4444/status | grep '\"ready\": true'"]
+      test: ["CMD-SHELL", "wget --no-cache -q -O - http://localhost:4444/status | grep '\"ready\": true'"]
       interval: 5s
       timeout: 2s
       retries: 10
