@@ -1,0 +1,40 @@
+name: Dockerized App Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:20.10.16
+        options: --privileged
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build containers
+        run: docker compose build
+
+      - name: Start app + test stack
+        run: docker compose up --abort-on-container-exit --exit-code-from ea_test
+
+      - name: Copy test results from container
+        run: |
+          mkdir -p test-results
+          docker cp eatest:/src/EAAppTest/TestResults test-results
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/TestResults/*.trx
