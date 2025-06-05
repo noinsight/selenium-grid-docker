@@ -30,7 +30,7 @@ jobs:
         run: |
            echo "Waiting for selenium-hub to be ready..."
             for i in {1..100}; do
-              if docker logs selenium-hub 2>&1 | grep -q "Selenium Grid ready"; then
+              if docker logs selenium-hub 2>&1 | grep -q "Started Selenium Hub"; then
                 echo "Selenium Hub is ready!"
                 break
               fi
