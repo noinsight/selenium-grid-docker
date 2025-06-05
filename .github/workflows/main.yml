@@ -17,11 +17,33 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Build containers
         run: docker compose build
 
       - name: Start app + test stack
         run: docker compose up -d
+
+      - name: Wait for selenium-hub to be ready
+        run: |
+          echo "Waiting for selenium-hub to report healthy status..."
+          for i in {1..40}; do
+            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' selenium-hub)
+            echo "Health status: $STATUS"
+            if [ "$STATUS" = "\"healthy\"" ]; then
+              echo "Selenium Hub is healthy!"
+              break
+            fi
+            sleep 3
+          done
+
+          if [ "$STATUS" != "\"healthy\"" ]; then
+            echo "Selenium Hub never became healthy"
+            docker logs selenium-hub
+            exit 1
+          fi
 
       - name: Run tests in eatest
         run: docker exec eatest dotnet test /src/EAAppTest/EAAppTest.csproj --logger:trx --no-build --configuration Release
@@ -44,3 +66,7 @@ jobs:
       - name: Show selenium hub logs on failure
         if: failure()
         run: docker logs selenium-hub
+
+      - name: Inspect selenium-hub healthcheck result
+        if: failure()
+        run: docker inspect --format='{{json .State.Health}}' selenium-hub | jq .
