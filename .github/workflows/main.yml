@@ -1,4 +1,4 @@
-name: Dockerized App Tests
+﻿name: Dockerized App Tests
 
 on:
   push:
@@ -9,11 +9,6 @@ on:
 jobs:
   integration-tests:
     runs-on: ubuntu-latest
-
-    services:
-      docker:
-        image: docker:20.10.16
-        options: --privileged
 
     steps:
       - name: Checkout code
@@ -26,7 +21,22 @@ jobs:
         run: docker compose build
 
       - name: Start app + test stack
-        run: docker compose up --abort-on-container-exit --exit-code-from ea_test
+        run: docker compose up -d
+
+      - name: Wait for selenium-hub to become ready
+        run: |
+          echo "Waiting for selenium-hub to be ready..."
+          for i in {1..30}; do
+            if curl -s http://localhost:4444/wd/hub/status | grep -q '"ready":true'; then
+              echo "✅ Selenium hub is ready."
+              break
+            fi
+            echo "⏳ Not ready yet..."
+            sleep 2
+          done
+
+      - name: Run tests in eatest
+        run: docker exec eatest dotnet test /src/EAAppTest/EAAppTest.csproj --logger:trx --no-build --configuration Release
 
       - name: Copy test results from container
         run: |
@@ -38,3 +48,11 @@ jobs:
         with:
           name: test-results
           path: test-results/TestResults/*.trx
+
+      - name: Show test container logs on failure
+        if: failure()
+        run: docker logs eatest
+
+      - name: Show selenium hub logs on failure
+        if: failure()
+        run: docker logs selenium-hub
