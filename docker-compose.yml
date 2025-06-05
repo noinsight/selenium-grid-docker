@@ -72,8 +72,6 @@ services:
       dockerfile: EAAppTest/Dockerfile
     restart: on-failure
     depends_on:
-      selenium-hub:
-         condition : service_healthy
       ea_webapp:
          condition : service_started
 
