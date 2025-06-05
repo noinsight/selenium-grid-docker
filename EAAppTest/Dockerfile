@@ -21,4 +21,10 @@ RUN dotnet build "EAAppTest.csproj" -c Release
 # Run the tests
 FROM build AS test-runner
 WORKDIR "/src/EAAppTest"
-CMD ["dotnet", "test", "EAAppTest.csproj", "--no-build", "--logger:trx;LogFileName=test-results.trx"]
+
+# Debug: list contents of build output directory
+RUN ls -l /src/EAAppTest/bin/Release/net6.0/
+
+# Run the tests using the .csproj and explicitly set Release config
+CMD ["dotnet", "test", "EAAppTest.csproj", "--configuration", "Release", "--logger:trx;LogFileName=test-results.trx"]
+
