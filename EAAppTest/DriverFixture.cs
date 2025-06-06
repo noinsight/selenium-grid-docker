@@ -13,15 +13,26 @@ namespace EAAppTest
 
         public void Setup(BrowserType browserType)
         {
-            driver = new RemoteWebDriver(
-                new Uri("http://selenium-hub:4444/"), 
-                GetBrowserOptions(browserType));
+            int retries = 5;
+            Exception? lastException = null;
 
-            if (driver == null)
+            for (int i = 0; i < retries; i++)
             {
-                throw new InvalidOperationException("Driver is not initialized. Setup failed");
+                try
+                {
+                    driver = new RemoteWebDriver(
+                        new Uri("http://selenium-hub:4444/wd/hub"),
+                        GetBrowserOptions(browserType));
+                    return; // Exit if driver is successfully initialized
+                }
+                catch (Exception ex)
+                {
+                    lastException = ex;
+                    System.Threading.Thread.Sleep(5000); // Wait before retrying
+                }
             }
 
+            throw new InvalidOperationException("Driver initialization failed after retries", lastException);
         }
 
         // This solution provided by co-pilot.

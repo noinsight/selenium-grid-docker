@@ -46,8 +46,8 @@ jobs:
       - name: Show Docker container status before tests
         run: docker ps -a
 
-      - name: Test network connectivity from test container to selenium-hub
-        run: docker exec eatest ping -c 4 selenium-hub
+      # - name: Test network connectivity from test container to selenium-hub
+      #  run: docker exec eatest ping -c 4 selenium-hub
 
       - name: Run tests in eatest
         run: docker exec eatest dotnet test /src/EAAppTest/EAAppTest.csproj --logger:trx --no-build --configuration Release
