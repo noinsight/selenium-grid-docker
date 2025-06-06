@@ -13,11 +13,13 @@ namespace EAAppTest
 
         public void Setup(BrowserType browserType)
         {
-            driver = new RemoteWebDriver(new Uri("http://selenium-hub:4444/"), GetBrowserOptions(browserType));
+            driver = new RemoteWebDriver(
+                new Uri("http://selenium-hub:4444/"), 
+                GetBrowserOptions(browserType));
 
             if (driver == null)
             {
-                // Do something here
+                throw new InvalidOperationException("Driver is not initialized. Setup failed");
             }
 
         }
