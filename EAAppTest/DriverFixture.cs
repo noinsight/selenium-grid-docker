@@ -13,7 +13,7 @@ namespace EAAppTest
 
         public void Setup(BrowserType browserType)
         {
-            int retries = 5;
+            int retries = 9;
             Exception? lastException = null;
 
             for (int i = 0; i < retries; i++)
@@ -28,7 +28,7 @@ namespace EAAppTest
                 catch (Exception ex)
                 {
                     lastException = ex;
-                    System.Threading.Thread.Sleep(5000); // Wait before retrying
+                    System.Threading.Thread.Sleep(8000); // Wait before retrying
                 }
             }
 
