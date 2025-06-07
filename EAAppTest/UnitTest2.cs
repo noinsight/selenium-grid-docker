@@ -9,7 +9,7 @@ namespace EAAppTest
 
         public UnitTest2(DriverFixture driverFixture)
         {
-            driverFixture.Setup(BrowserType.Firefox);
+            driverFixture.Setup(BrowserType.Chrome);
             this.driverFixture = driverFixture;
         }
 

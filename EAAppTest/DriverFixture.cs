@@ -55,7 +55,7 @@ namespace EAAppTest
                 case BrowserType.Chrome:
                     {
                         var chromeOption = new ChromeOptions();
-                        chromeOption.AddAdditionalOption("se:recordVideo", true);
+                        //chromeOption.AddAdditionalOption("se:recordVideo", true);
                         return chromeOption;
                     }
                 default:
