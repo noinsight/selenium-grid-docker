@@ -37,8 +37,15 @@ jobs:
               sleep 2
             done
 
-      - name: Inspect selenium-hub healthcheck result
-        run: docker inspect --format='{{json .State.Health}}' selenium-hub | jq .
+      - name: Log Selenium Grid Status
+        run: |
+          echo "Grid status:"
+          curl -s http://localhost:4444/status | jq .
+          echo "Grid API hub:"
+          curl -s http://localhost:4444/grid/api/hub | jq .
+
+      - name: Print environment variables
+        run: env
 
       - name: Show Docker networks
         run: docker network ls && docker network inspect bridge
