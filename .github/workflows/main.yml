@@ -80,4 +80,5 @@ jobs:
 
       - name: Show node-docker logs
         if: failure()  
-        run: docker logs node-docker
+        run: docker logs selenium-grid-docker-node-docker-1
+
