@@ -78,6 +78,6 @@ jobs:
         if: failure()
         run: docker logs selenium-hub
 
-      - name: Inspect selenium-hub healthcheck result
-        if: failure()
-        run: docker inspect --format='{{json .State.Health}}' selenium-hub | jq .
+      - name: Show node-docker logs
+        if: failure()  
+        run: docker logs node-docker
