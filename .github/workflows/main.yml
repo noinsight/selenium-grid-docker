@@ -26,24 +26,6 @@ jobs:
       - name: Start app + test stack
         run: docker compose up -d
 
-      - name: Wait for Selenium Grid and nodes to be ready
-        run: |
-           echo "Waiting for Selenium Grid and nodes to be ready..."
-           for i in {1..60}; do
-              STATUS=$(curl -s http://localhost:4444/status)
-              HUB_READY=$(echo $STATUS | jq -r '.value.ready')
-              CHROME_NODES=$(echo $STATUS | jq -r '.value.nodes[] | select(.slots[].stereotype.browserName=="chrome") | .id' | wc -l)
-              if [[ "$HUB_READY" == "true" && "$CHROME_NODES" -gt 0 ]]; then
-              echo "Selenium Grid is ready and Chrome node(s) are available!"
-              break
-           fi
-           if [[ $i -eq 60 ]]; then
-             echo "Timed out waiting for Selenium nodes to be ready"
-             exit 1
-           fi
-           sleep 2
-           done
-
       - name: Wait for selenium-hub to be ready
         run: |
            echo "Waiting for selenium-hub to be ready..."
