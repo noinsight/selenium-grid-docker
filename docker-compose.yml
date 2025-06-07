@@ -43,7 +43,7 @@ services:
   node-docker:
     image: selenium/node-docker:4.1.0-20211209
     volumes:
-      - ./assets:/opt/selenium/assets
+#      - ./assets:/opt/selenium/assets
       - ./config.toml:/opt/bin/config.toml
     depends_on:
       - selenium-hub
@@ -71,9 +71,10 @@ services:
       context: .
       dockerfile: EAAppTest/Dockerfile
     restart: on-failure
-    depends_on: 
-      - selenium-hub
-      - ea_webapp
+    depends_on:
+      ea_webapp:
+         condition : service_started
+
     networks: 
       - ea_network
       
