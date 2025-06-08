@@ -76,9 +76,5 @@ jobs:
 
       - name: Show selenium hub logs on failure
         if: failure()
-        run: docker logs selenium-hub
-
-      - name: Show node-docker logs
-        if: failure()  
-        run: docker logs selenium-grid-docker-node-docker-1
+        run: docker logs selenium-grid-docker-selenium-hub-1
 
