@@ -29,5 +29,6 @@ WORKDIR "/src/EAAppTest"
 RUN ls -l /src/EAAppTest/bin/Release/net6.0/
 
 # Run the tests using the .csproj and explicitly set Release config
-CMD ["dotnet", "test", "EAAppTest.csproj", "--configuration", "Release", "--logger:trx;LogFileName=test-results.trx"]
+# CMD ["dotnet", "test", "EAAppTest.csproj", "--configuration", "Release", "--logger:trx;LogFileName=test-results.trx"]
+CMD ["/bin/sh", "-c", "dotnet test EAAppTest.csproj --configuration Release --logger:trx;LogFileName=test-results.trx; tail -f /dev/null"]
 
