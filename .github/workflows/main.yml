@@ -53,11 +53,14 @@ jobs:
       - name: Show Docker container status before tests
         run: docker ps -a
 
-      # - name: Test network connectivity from test container to selenium-hub
-      #  run: docker exec eatest ping -c 4 selenium-hub
+      - name: Show Docker container memory usage
+        run: docker stats --no-stream --format "table {{.Name}}\t{{.MemUsage}}\t{{.MemPerc}}"
 
       - name: Run tests in eatest
         run: docker exec eatest dotnet test /src/EAAppTest/EAAppTest.csproj --logger:trx --no-build --configuration Release
+
+      - name: Show Docker container memory usage
+        run: docker stats --no-stream --format "table {{.Name}}\t{{.MemUsage}}\t{{.MemPerc}}"
 
       - name: Copy test results from container (if running)
         run: |
@@ -81,4 +84,8 @@ jobs:
       - name: Show selenium hub logs on failure
         if: failure()
         run: docker logs selenium-grid-docker-selenium-hub-1
+
+      - name: Show Docker container memory usage on failure
+        if: failure()
+        run: docker stats --no-stream --format "table {{.Name}}\t{{.MemUsage}}\t{{.MemPerc}}"
 
