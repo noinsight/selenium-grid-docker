@@ -30,7 +30,7 @@ jobs:
         run: |
            echo "Waiting for selenium-hub to be ready..."
             for i in {1..100}; do
-              if docker logs selenium-hub 2>&1 | grep -q "Started Selenium Hub"; then
+              if docker logs selenium-grid-docker-selenium-hub-1 2>&1 | grep -q "Started Selenium Hub"; then
                 echo "Selenium Hub is ready!"
                 break
               fi
@@ -59,10 +59,14 @@ jobs:
       - name: Run tests in eatest
         run: docker exec eatest dotnet test /src/EAAppTest/EAAppTest.csproj --logger:trx --no-build --configuration Release
 
-      - name: Copy test results from container
+      - name: Copy test results from container (if running)
         run: |
           mkdir -p test-results
-          docker cp eatest:/src/EAAppTest/TestResults test-results
+          if docker ps -a --format '{{.Names}}' | grep -q '^eatest$'; then
+            docker cp eatest:/src/EAAppTest/TestResults test-results || echo "Could not copy test results; container may have exited."
+          else
+            echo "eatest container is not running or has exited. Skipping docker cp."
+          fi
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
